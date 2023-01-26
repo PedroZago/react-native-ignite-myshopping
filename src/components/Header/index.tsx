@@ -1,29 +1,32 @@
-import React from 'react';
-import { ButtonIcon } from '../ButtonIcon';
+import React from "react";
+import { ButtonIcon } from "../ButtonIcon";
 
-import { Container, Title } from './styles';
+import auth from "@react-native-firebase/auth";
+
+import { Container, Title } from "./styles";
 
 type Props = {
   title: string;
   showLogoutButton?: boolean;
-}
+};
 
 export function Header({ title, showLogoutButton = false }: Props) {
+  async function handleLogout() {
+    auth().signOut();
+  }
+
   return (
     <Container showLogoutButton={showLogoutButton}>
-      <Title>
-        {title}
-      </Title>
+      <Title>{title}</Title>
 
-      {
-        showLogoutButton &&
+      {showLogoutButton && (
         <ButtonIcon
           icon="logout"
           color="alert"
           style={{ marginTop: 20 }}
-          onPress={() => {}}
+          onPress={handleLogout}
         />
-      }
+      )}
     </Container>
   );
 }
